@@ -28,8 +28,7 @@ GRTAGS
 GTAGS
 
 # AI context files
-GEMINI.md
-AGENTS.md
-CLAUDE.md
 .aider*
 .grok/
+.claude/
+.gemini/
