@@ -37,7 +37,7 @@ cmake --build --preset=release
 # Run tests with default preset
 ctest --preset=default
 
-# Run tests with release preset  
+# Run tests with release preset
 ctest --preset=release
 
 # Run specific test executable directly
@@ -63,7 +63,6 @@ cmake --workflow --preset=default
 - Uses perfect forwarding and RAII for zero-overhead scope guards
 - Employs `__COUNTER__` macro to generate unique variable names
 - Destructor is `noexcept(false)` to allow throwing destructors if needed
-- No dynamic allocation (unlike BOOST_SCOPE_EXIT which uses std::function)
 
 ## Dependencies
 

@@ -7,9 +7,6 @@
 ///   FILE * f = fopen("file", "r");
 ///   scope(exit) { close(f); };
 /// ```
-///
-/// Note:
-/// Do not use BOOST_SCOPE_EXIT.  It uses std::function internally and therefore allocates memory.
 
 #include <utility>
 
