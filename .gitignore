@@ -1,0 +1,35 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# local files
+CMakeUserPresets.json
+build/
+Testing/
+.vscode/
+
+# editors temp files
+*.swp
+*.swo
+
+# tags
+GPATH
+GRTAGS
+GTAGS
+
+# AI context files
+GEMINI.md
+AGENTS.md
+CLAUDE.md
+.aider*
+.grok/
