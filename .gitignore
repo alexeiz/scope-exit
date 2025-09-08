@@ -17,6 +17,7 @@ CMakeUserPresets.json
 build/
 Testing/
 .vscode/
+.cache/
 
 # editors temp files
 *.swp
