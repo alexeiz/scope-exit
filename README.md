@@ -1,6 +1,6 @@
 # scope-exit
 
-A header-only C++17 library providing a `scope(exit)` macro for automatic resource cleanup using RAII principles. This library offers a zero-overhead alternative to `BOOST_SCOPE_EXIT` without dynamic memory allocation.
+A header-only C++17 library providing `scope(exit)`, `scope(success)`, and `scope(failure)` macros for automatic resource cleanup using RAII principles. This library offers a zero-overhead alternative to `BOOST_SCOPE_EXIT` without dynamic memory allocation.
 
 ## Features
 
@@ -8,7 +8,8 @@ A header-only C++17 library providing a `scope(exit)` macro for automatic resour
 - **C++17 standard**: Modern C++ with perfect forwarding
 - **Zero overhead**: No dynamic memory allocation
 - **Exception safe**: Cleanup code executes during stack unwinding
-- **Simple syntax**: Intuitive `scope(exit)` macro
+- **Multiple scope types**: `scope(exit)`, `scope(success)`, and `scope(failure)` macros
+- **Simple syntax**: Intuitive macro-based API
 
 ## Requirements
 
@@ -104,6 +105,126 @@ void transaction_example() {
 }
 ```
 
+### Success/Failure Conditional Execution
+
+```cpp
+#include <scope_exit/scope_exit.hpp>
+
+void conditional_cleanup_example() {
+    scope(success) {
+        std::cout << "Operation completed successfully!\n";
+        cleanup_temporary_files();
+    };
+
+    scope(failure) {
+        std::cout << "Operation failed, performing error recovery\n";
+        log_error_details();
+        notify_administrators();
+    };
+
+    scope(exit) {
+        std::cout << "Always executed regardless of success/failure\n";
+    };
+
+    // Perform some operation that might throw
+    risky_operation();
+}
+```
+
+### Database Transaction with Success/Failure Guards
+
+```cpp
+void database_transaction() {
+    auto transaction = db.begin_transaction();
+
+    scope(success) {
+        transaction.commit();
+        std::cout << "Transaction committed successfully\n";
+    };
+
+    scope(failure) {
+        transaction.rollback();
+        std::cout << "Transaction rolled back due to error\n";
+    };
+
+    // Perform database operations
+    db.insert_record(record1);
+    db.update_record(record2);
+    db.delete_record(record3);
+    // If any operation throws, failure guard executes
+    // If all succeed, success guard executes
+}
+```
+
+### File Processing with Error Recovery
+
+```cpp
+void process_file(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file) throw std::runtime_error("Cannot open file");
+
+    std::string backup_filename = filename + ".backup";
+    bool backup_created = false;
+
+    scope(success) {
+        // Remove backup file on successful processing
+        if (backup_created) {
+            std::remove(backup_filename.c_str());
+        }
+        std::cout << "File processed successfully\n";
+    };
+
+    scope(failure) {
+        // Restore from backup on failure
+        if (backup_created) {
+            std::rename(backup_filename.c_str(), filename.c_str());
+            std::cout << "Restored original file from backup\n";
+        }
+    };
+
+    // Create backup
+    std::ofstream backup(backup_filename);
+    backup << file.rdbuf();
+    backup_created = true;
+
+    // Process the file (might throw)
+    transform_file_content(filename);
+}
+```
+
+### Mixed Scope Guards in Complex Operations
+
+```cpp
+void complex_operation() {
+    Resource* resource = acquire_resource();
+    bool operation_started = false;
+
+    // Always cleanup resource
+    scope(exit) {
+        release_resource(resource);
+    };
+
+    // Log success metrics
+    scope(success) {
+        increment_success_counter();
+        log_operation_success();
+    };
+
+    // Handle failures
+    scope(failure) {
+        increment_failure_counter();
+        log_operation_failure();
+        if (operation_started) {
+            perform_emergency_cleanup();
+        }
+    };
+
+    operation_started = true;
+    perform_critical_operation(resource);
+    // Success/failure guards execute based on whether an exception was thrown
+}
+```
+
 ## Installation
 
 ### Method 1: Header-Only (Simplest)
@@ -193,14 +314,29 @@ scope(exit) { /* cleanup code */ };
 - **Order**: Multiple scope guards execute in LIFO (reverse declaration) order
 - **Capture**: Lambda-style capture of surrounding variables by reference
 
-## How It Works
+### `scope(success)` Macro
 
-The library uses C++ RAII principles:
+```cpp
+scope(success) { /* success code */ };
+```
 
-1. The `scope(exit)` macro creates a lambda and binds it to a scope guard object
-2. The scope guard's destructor executes the lambda when the object goes out of scope
-3. Uses perfect forwarding and template metaprogramming for zero overhead
-4. Employs `__COUNTER__` macro to generate unique variable names
+- **Purpose**: Execute code only when scope exits normally (without exception)
+- **Execution**: Only executes if no exception is thrown during scope lifetime
+- **Use cases**: Commit transactions, cleanup temporary resources, success logging
+- **Order**: Multiple scope guards execute in LIFO (reverse declaration) order
+- **Capture**: Lambda-style capture of surrounding variables by reference
+
+### `scope(failure)` Macro
+
+```cpp
+scope(failure) { /* failure code */ };
+```
+
+- **Purpose**: Execute code only when scope exits due to exception
+- **Execution**: Only executes if an exception is thrown during scope lifetime
+- **Use cases**: Rollback transactions, error logging, recovery operations
+- **Order**: Multiple scope guards execute in LIFO (reverse declaration) order
+- **Capture**: Lambda-style capture of surrounding variables by reference
 
 ## License
 
