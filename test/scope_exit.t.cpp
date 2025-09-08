@@ -5,7 +5,6 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
-#include <memory>
 
 TEST_CASE("basic scope_exit functionality", "[scope_exit][basic]") {
     SECTION("simple scope exit execution") {
