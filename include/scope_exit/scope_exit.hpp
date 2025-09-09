@@ -23,10 +23,7 @@ struct scope_guard
         : action{f}
     {}
 
-    ~scope_guard() noexcept(false)
-    {
-        action();
-    }
+    ~scope_guard() noexcept(false) { action(); }
 
     F action;
 };
@@ -74,8 +71,7 @@ struct scope_failure_guard
 struct scope_guard_tag
 {
     template <typename F>
-    friend
-    auto operator+(scope_guard_tag, F && f)
+    friend auto operator+(scope_guard_tag, F && f)
     {
         return scope_guard<F>(std::forward<F>(f));
     }
@@ -84,8 +80,7 @@ struct scope_guard_tag
 struct scope_success_guard_tag
 {
     template <typename F>
-    friend
-    auto operator+(scope_success_guard_tag, F && f)
+    friend auto operator+(scope_success_guard_tag, F && f)
     {
         return scope_success_guard<F>(std::forward<F>(f));
     }
@@ -94,26 +89,28 @@ struct scope_success_guard_tag
 struct scope_failure_guard_tag
 {
     template <typename F>
-    friend
-    auto operator+(scope_failure_guard_tag, F && f)
+    friend auto operator+(scope_failure_guard_tag, F && f)
     {
         return scope_failure_guard<F>(std::forward<F>(f));
     }
 };
 
-}  // namespace detail
-}  // namespace scope_exit_v1
+} // namespace detail
+} // namespace scope_exit_v1
 
-#define SCOPE_CONCAT2_(X, Y)  X ## Y
-#define SCOPE_CONCAT_(X, Y)   SCOPE_CONCAT2_(X, Y)
+#define SCOPE_CONCAT2_(X, Y) X##Y
+#define SCOPE_CONCAT_(X, Y)  SCOPE_CONCAT2_(X, Y)
 
-#define scope(condition)  scope_ ## condition
-#define scope_exit        auto const & SCOPE_CONCAT_(scope_guard_obj_, __COUNTER__)         \
-                          __attribute__ ((unused)) = scope_exit_v1::detail::scope_guard_tag{} + [&]
-#define scope_success     auto const & SCOPE_CONCAT_(scope_success_guard_obj_, __COUNTER__) \
-                          __attribute__ ((unused)) = scope_exit_v1::detail::scope_success_guard_tag{} + [&]
-#define scope_failure     auto const & SCOPE_CONCAT_(scope_failure_guard_obj_, __COUNTER__) \
-                          __attribute__ ((unused)) = scope_exit_v1::detail::scope_failure_guard_tag{} + [&]
+#define scope(condition) scope_##condition
+#define scope_exit                                                                                                     \
+    auto const & SCOPE_CONCAT_(scope_guard_obj_, __COUNTER__) __attribute__((unused)) =                                \
+        scope_exit_v1::detail::scope_guard_tag{} + [&]
+#define scope_success                                                                                                  \
+    auto const & SCOPE_CONCAT_(scope_success_guard_obj_, __COUNTER__) __attribute__((unused)) =                        \
+        scope_exit_v1::detail::scope_success_guard_tag{} + [&]
+#define scope_failure                                                                                                  \
+    auto const & SCOPE_CONCAT_(scope_failure_guard_obj_, __COUNTER__) __attribute__((unused)) =                        \
+        scope_exit_v1::detail::scope_failure_guard_tag{} + [&]
 
 // Copyright Alexei Zakharov, 2025.
 //
