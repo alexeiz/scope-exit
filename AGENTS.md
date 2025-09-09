@@ -37,3 +37,8 @@
 ## Security & Configuration Tips
 - Presets use Ninja and a GCC toolchain with strict warnings; prefer the provided presets.
 - Do not change public macro names or the `scope(exit)` contract without a version bump.
+
+## Agent‑Specific Instructions
+- Respect this AGENTS.md across the repo; keep changes minimal and focused.
+- Match existing style; do not introduce new dependencies or modify unrelated files.
+- The library is header‑only; edits to `include/` are shipped as‑is on install.
