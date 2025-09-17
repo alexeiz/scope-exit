@@ -58,10 +58,10 @@ TEST_CASE("variable capture and modification", "[scope_exit][capture]")
         {
             scope(exit) { ++counter; };
 
-            REQUIRE(counter == 0); // not executed yet
+            REQUIRE(counter == 0);  // not executed yet
         }
 
-        REQUIRE(counter == 1); // executed on scope exit
+        REQUIRE(counter == 1);  // executed on scope exit
     }
 
     SECTION("access local variables")
@@ -200,7 +200,7 @@ TEST_CASE("scope_success functionality", "[scope_success][basic]")
         auto test_function = [&]() -> bool {
             scope(success) { success_executed = true; };
 
-            return true; // normal return
+            return true;  // normal return
         };
 
         bool result = test_function();
@@ -217,7 +217,7 @@ TEST_CASE("scope_success functionality", "[scope_success][basic]")
             scope(success) { success_executed = true; };
 
             throw std::runtime_error("exception in function");
-            return false; // unreachable
+            return false;  // unreachable
         };
 
         try
@@ -295,7 +295,7 @@ TEST_CASE("scope_failure functionality", "[scope_failure][basic]")
         auto test_function = [&]() -> bool {
             scope(failure) { failure_executed = true; };
 
-            return true; // normal return
+            return true;  // normal return
         };
 
         bool result = test_function();
@@ -312,7 +312,7 @@ TEST_CASE("scope_failure functionality", "[scope_failure][basic]")
             scope(failure) { failure_executed = true; };
 
             throw std::runtime_error("exception in function");
-            return false; // unreachable
+            return false;  // unreachable
         };
 
         try
@@ -447,7 +447,7 @@ TEST_CASE("edge cases and control flow", "[scope_exit][edge_cases]")
 
             if (true)
             {
-                return false; // Early return
+                return false;  // Early return
             }
 
             return true;

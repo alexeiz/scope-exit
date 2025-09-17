@@ -95,8 +95,8 @@ struct scope_failure_guard_tag
     }
 };
 
-} // namespace detail
-} // namespace scope_exit_v1
+}  // namespace detail
+}  // namespace scope_exit_v1
 
 #define SCOPE_CONCAT2_(X, Y) X##Y
 #define SCOPE_CONCAT_(X, Y)  SCOPE_CONCAT2_(X, Y)

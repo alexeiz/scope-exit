@@ -2,6 +2,7 @@
 Language: Cpp
 BasedOnStyle: LLVM
 IndentWidth: 4
+AccessModifierOffset: -4
 UseTab: Never
 ColumnLimit: 120
 BreakBeforeBraces: Custom
@@ -23,7 +24,7 @@ BraceWrapping:
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 NamespaceIndentation: None
-AlignConsecutiveMacros: Consecutive
+AlignConsecutiveMacros: true
 AlignEscapedNewlines: Right
 SpaceBeforeParens: ControlStatementsExceptControlMacros
 SpacesInParentheses: false
@@ -55,4 +56,5 @@ SpaceAfterTemplateKeyword: true
 SpaceBeforeCtorInitializerColon: true
 SpaceBeforeInheritanceColon: true
 SpaceBeforeRangeBasedForLoopColon: true
+SpacesBeforeTrailingComments: 2
 Standard: c++17
