@@ -103,13 +103,13 @@ struct scope_failure_guard_tag
 
 #define scope(condition) scope_##condition
 #define scope_exit                                                                                                     \
-    auto const & SCOPE_CONCAT_(scope_guard_obj_, __COUNTER__) __attribute__((unused)) =                                \
+    [[maybe_unused]] auto const & SCOPE_CONCAT_(scope_guard_obj_, __COUNTER__) =                                       \
         scope_exit_v1::detail::scope_guard_tag{} + [&]
 #define scope_success                                                                                                  \
-    auto const & SCOPE_CONCAT_(scope_success_guard_obj_, __COUNTER__) __attribute__((unused)) =                        \
+    [[maybe_unused]] auto const & SCOPE_CONCAT_(scope_success_guard_obj_, __COUNTER__) =                               \
         scope_exit_v1::detail::scope_success_guard_tag{} + [&]
 #define scope_failure                                                                                                  \
-    auto const & SCOPE_CONCAT_(scope_failure_guard_obj_, __COUNTER__) __attribute__((unused)) =                        \
+    [[maybe_unused]] auto const & SCOPE_CONCAT_(scope_failure_guard_obj_, __COUNTER__) =                               \
         scope_exit_v1::detail::scope_failure_guard_tag{} + [&]
 
 // Copyright Alexei Zakharov, 2025.
