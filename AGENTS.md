@@ -19,6 +19,7 @@
 
 ## Coding Style & Naming Conventions
 - C++17, 4‑space indentation, no tabs; keep lines readable (~100 cols).
+- Make sure each source file ends with a new line.
 - Warnings are errors (see `cmake/toolchain-gcc.cmake`); fix or silence intentionally.
 - Files: lower_snake_case `.hpp`. Macros: `UPPER_SNAKE_CASE`. Namespaces: lower_snake_case with version suffix (e.g., `scope_exit_v1`).
 - Types/functions/variables follow current style (e.g., `scope_guard`, `scope_guard_tag`). Avoid introducing dynamic allocation or new runtime deps.

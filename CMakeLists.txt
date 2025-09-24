@@ -5,10 +5,13 @@ project(
   VERSION 0.2.1
   LANGUAGES CXX)
 
-MESSAGE(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+if(CMAKE_TOOLCHAIN_FILE)
+  MESSAGE(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+endif()
 
 # dependencies
 include(cmake/deps.cmake)
+include(cmake/target_options.cmake)
 
 # generate version header
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/scope_exit/detail)
@@ -49,8 +52,8 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-# enforce C++17 on consumers
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
+apply_project_options(${PROJECT_NAME} INTERFACE)
 
 include(cmake/genconfig.cmake)
 include(cmake/install.cmake)
