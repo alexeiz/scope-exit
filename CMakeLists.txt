@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
 
 project(
   scope_exit
-  VERSION 0.2.1
+  VERSION 0.2.2
   LANGUAGES CXX)
 
 if(CMAKE_TOOLCHAIN_FILE)
