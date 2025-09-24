@@ -68,4 +68,3 @@ cmake --workflow --preset=default
 
 - **Build**: CMake 3.28+, C++17 compiler, Ninja
 - **Testing**: Catch2 (fetched via CPM)
-- **Toolchain**: GCC (configured in cmake/toolchain-gcc.cmake)
