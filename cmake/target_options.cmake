@@ -13,8 +13,7 @@ function(apply_project_options target scope)
 
     foreach(option IN LISTS common_options)
         target_compile_options(${target} ${scope}
-            $<$<CXX_COMPILER_ID:GNU>:${option}>
-            $<$<CXX_COMPILER_ID:Clang>:${option}>
+            $<$<CXX_COMPILER_ID:GNU,Clang>:${option}>
         )
     endforeach()
 

@@ -53,7 +53,6 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 )
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
-apply_project_options(${PROJECT_NAME} INTERFACE)
 
 include(cmake/genconfig.cmake)
 include(cmake/install.cmake)
