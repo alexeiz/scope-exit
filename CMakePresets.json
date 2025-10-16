@@ -3,7 +3,7 @@
   "configurePresets": [
     {
       "name": "common",
-	  "hidden": true,
+      "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
@@ -27,7 +27,7 @@
     {
       "name": "common-clang",
       "inherits": "common",
-	  "hidden": true,
+      "hidden": true,
       "cacheVariables": {
         "CMAKE_CXX_COMPILER": "clang++"
       }
