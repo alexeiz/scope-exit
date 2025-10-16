@@ -19,14 +19,14 @@ This is a header-only C++17 library providing a `scope_exit` macro for automatic
 
 ### Configuration and Build
 ```bash
-# Configure with default preset (Debug)
-cmake --preset=default
+# Configure with debug preset
+cmake --preset=debug
 
 # Configure for release
 cmake --preset=release
 
 # Build
-cmake --build --preset=default
+cmake --build --preset=debug
 
 # Build release
 cmake --build --preset=release
@@ -34,8 +34,8 @@ cmake --build --preset=release
 
 ### Testing
 ```bash
-# Run tests with default preset
-ctest --preset=default
+# Run tests with debug preset
+ctest --preset=debug
 
 # Run tests with release preset
 ctest --preset=release
@@ -47,7 +47,7 @@ ctest --preset=release
 ### Complete Workflow
 ```bash
 # Full workflow: configure + build + test
-cmake --workflow --preset=default
+cmake --workflow --preset=debug
 ```
 
 ## Project Structure

@@ -275,20 +275,20 @@ target_link_libraries(your_target PRIVATE scope_exit::scope_exit)
 
 ```bash
 # Configure (Debug by default)
-cmake --preset=default
+cmake --preset=debug
 
 # Or configure for release
 cmake --preset=release
 
 # Build
-cmake --build --preset=default
+cmake --build --preset=debug
 ```
 
 ### Run Tests
 
 ```bash
 # Run all tests
-ctest --preset=default
+ctest --preset=debug
 
 # Or run specific test executable
 ./build/test/test_scope_exit
@@ -298,7 +298,7 @@ ctest --preset=default
 
 ```bash
 # One command: configure + build + test
-cmake --workflow --preset=default
+cmake --workflow --preset=debug
 ```
 
 ## API Reference
